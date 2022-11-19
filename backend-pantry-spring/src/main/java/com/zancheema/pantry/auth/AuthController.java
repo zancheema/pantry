@@ -31,7 +31,7 @@ public class AuthController {
                 .body(optionalUser.get());
     }
 
-    @GetMapping("/token")
+    @PostMapping("/token")
     public ResponseEntity<AuthToken> token(Authentication authentication) {
         AuthToken token = authService.generateToken(authentication);
         return ResponseEntity.ok(token);
