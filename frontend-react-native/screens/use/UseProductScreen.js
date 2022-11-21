@@ -18,7 +18,7 @@ export default function UseProductScreen({ navigation, route }) {
     const showUseProductDialog = () => setUseProductDialogVisible(true);
     const hideUseProductDialog = () => setUseProductDialogVisible(false);
 
-    const showProductDoesNotExist = (quantity) => Alert.alert(
+    const showProductDoesNotExist = () => Alert.alert(
         'Not registered',
         'The product is not scanned in pantry before. Do you wnat to add it?',
         [

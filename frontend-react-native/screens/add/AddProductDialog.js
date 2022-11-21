@@ -7,9 +7,14 @@ export default function AddProductDialog({ dialogVisible, hideDialog, barcode })
     const [quantity, setQuantity] = useState(1);
 
     async function addCurrentProduct() {
-        await addProduct({ barcode, quantity })
-        hideDialog();
-        Alert.alert('Product added successfully.')
+        try {
+            await addProduct({ barcode, quantity })
+            hideDialog();
+            Alert.alert('Product added successfully.')
+        } catch (e) {
+            console.log('add product error: ' + e);
+            Alert.alert('Failed to add product');
+        }
     }
 
     return (
