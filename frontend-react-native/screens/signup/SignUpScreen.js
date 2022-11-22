@@ -47,7 +47,7 @@ export default function SignUpScreen({ navigation }) {
                 value={cpassword}
             />
             <Pressable style={styles.primaryButtonWide} onPress={handleSignup}>
-                <Text style={styles.filledButtonText}>Login</Text>
+                <Text style={styles.filledButtonText}>Sign Up</Text>
             </Pressable>
             <View style={{ marginTop: 30 }}>
                 <Button onPress={openSignin} title='Sign In' />
