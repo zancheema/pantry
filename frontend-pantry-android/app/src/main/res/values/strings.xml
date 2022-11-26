@@ -5,4 +5,7 @@
     <string name="login">Login</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="signup">Sign Up</string>
+    <string name="not_signedup">Not signed up already?</string>
+    <string name="already_signedup">Already signed up?</string>
+    <string name="preference_file_key">com.zancheema.android.pantry.$shrd-prf</string>
 </resources>

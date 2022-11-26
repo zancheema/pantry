@@ -1,9 +1,11 @@
 package com.zancheema.android.pantry;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.zancheema.android.pantry.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,8 +17,14 @@ public class MainActivity extends AppCompatActivity {
         startLoginActivity();
     }
 
+    /**
+     * 1. Start {@link LoginActivity}
+     * 2. Finish this activity
+     *    Smoother than {Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK}
+     */
     private void startLoginActivity() {
-        Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 }

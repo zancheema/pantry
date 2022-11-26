@@ -1,4 +1,4 @@
-package com.zancheema.android.pantry.remote.dto;
+package com.zancheema.android.pantry.ui.signup.dto;
 
 public class SignUpPayload {
     private String username;
