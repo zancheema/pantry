@@ -18,4 +18,10 @@ class SharedPreferencesAuthTokenProvider(context: Context, filename: String) : A
     override fun getAccessToken(): String {
         return sharedPreferences.getString(KEY_ACCESS_TOKEN, "") ?: ""
     }
+
+    override fun deleteAccessToken() {
+        sharedPreferences.edit()
+            .remove(KEY_ACCESS_TOKEN)
+            .apply()
+    }
 }

@@ -4,4 +4,6 @@ interface AuthTokenProvider {
     fun saveAccessToken(accessToken: String)
 
     fun getAccessToken(): String
+
+    fun deleteAccessToken()
 }

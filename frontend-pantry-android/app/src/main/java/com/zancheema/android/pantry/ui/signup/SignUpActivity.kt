@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.zancheema.android.pantry.PantryApplication
 import com.zancheema.android.pantry.R
 import com.zancheema.android.pantry.common.anyBlank
 import com.zancheema.android.pantry.common.showSnackbar
@@ -19,7 +20,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var btnSignup: Button
     private lateinit var tvLogin: TextView
 
-    private val signUpViewController = SignUpViewController()
+    private lateinit var signUpViewController: SignUpViewController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,9 @@ class SignUpActivity : AppCompatActivity() {
         etConfirmPassword = findViewById(R.id.editTextConfirmPassword)
         btnSignup = findViewById(R.id.buttonSignup)
         tvLogin = findViewById(R.id.textViewLogin)
+
+        val container = (application as PantryApplication).appContainer
+        signUpViewController = SignUpViewController(container.retrofit)
 
         btnSignup.setOnClickListener(this::onSignup);
         tvLogin.setOnClickListener(this::onLogin);

@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.zancheema.android.pantry.PantryApplication
 import com.zancheema.android.pantry.R
 import com.zancheema.android.pantry.common.anyBlank
 import com.zancheema.android.pantry.common.showSnackbar
@@ -31,7 +32,8 @@ class LoginActivity : AppCompatActivity() {
         btnLogin = findViewById(R.id.buttonLogin)
         tvSignup = findViewById(R.id.textViewSignup)
 
-        loginViewController = LoginViewController(this)
+        val container = (application as PantryApplication).appContainer
+        loginViewController = LoginViewController(container.retrofit, container.authenticationProvider)
 
         btnLogin.setOnClickListener(this::onLogin);
         tvSignup.setOnClickListener(this::onSignup);
