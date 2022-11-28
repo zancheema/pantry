@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.Optional;
 
 @RestController
@@ -19,24 +20,26 @@ public class ProductController {
     }
 
     @GetMapping
-    public Products getProducts() {
-        return productService.getProducts();
+    public Products getProducts(Principal principal) {
+        return productService.getProducts(principal);
     }
 
     @GetMapping("/{barcode}")
-    public ResponseEntity<ProductInfo> getProduct(@PathVariable("barcode") String barcode) {
-        Optional<ProductInfo> optionalProduct = productService.getProduct(barcode);
+    public ResponseEntity<ProductInfo> getProduct(Principal principal, @PathVariable("barcode") String barcode) {
+        Optional<ProductInfo> optionalProduct = productService.getProduct(principal, barcode);
         return ResponseEntity.of(optionalProduct);
     }
 
     @GetMapping("/{barcode}/exists")
-    public ExistsInfo productExists(@PathVariable("barcode") String barcode) {
-        return productService.productExists(barcode);
+    public ExistsInfo productExists(Principal principal, @PathVariable("barcode") String barcode) {
+        return productService.productExists(principal, barcode);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ProductInfo> addProduct(@RequestBody @Valid AddProductPayload payload) throws URISyntaxException {
-        ProductInfo product = productService.addProduct(payload);
+    public ResponseEntity<ProductInfo> addProduct(
+            Principal principal, @RequestBody @Valid AddProductPayload payload
+    ) throws URISyntaxException {
+        ProductInfo product = productService.addProduct(principal, payload);
         URI location = new URI("/api/products/" + product.barcode());
         return ResponseEntity.created(location)
                 .body(product);
@@ -44,18 +47,19 @@ public class ProductController {
 
     @PatchMapping("/{barcode}/use")
     public ResponseEntity<ProductInfo> useProduct(
+            Principal principal,
             @PathVariable("barcode") String barcode,
             @RequestBody @Valid UseProductPayload payload
     ) {
-        Optional<ProductInfo> optionalProduct = productService.useProduct(barcode, payload);
+        Optional<ProductInfo> optionalProduct = productService.useProduct(principal, barcode, payload);
         if (optionalProduct.isEmpty()) return ResponseEntity.badRequest().build();
 
         return ResponseEntity.ok(optionalProduct.get());
     }
 
     @DeleteMapping("/{barcode}/use/all")
-    public ResponseEntity<?> useProductCompletely(@PathVariable("barcode") String barcode) {
-        productService.useProductCompletely(barcode);
+    public ResponseEntity<?> useProductCompletely(Principal principal, @PathVariable("barcode") String barcode) {
+        productService.useProductCompletely(principal, barcode);
         return ResponseEntity.noContent().build();
     }
 }
