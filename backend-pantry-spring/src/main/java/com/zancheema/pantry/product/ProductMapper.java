@@ -4,12 +4,15 @@ import com.zancheema.pantry.product.dto.ProductInfo;
 import com.zancheema.pantry.productdetail.ProductDetail;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+
 @Component
 public class ProductMapper {
     public ProductInfo toProductInfo(ProductDetail productDetail) {
         return new ProductInfo(
                 productDetail.getProduct().getBarcode(),
-                productDetail.getQuantity()
+                productDetail.getQuantity(),
+                new HashSet<>()
         );
     }
 //    public Product toProduct(AddProductPayload payload) {
