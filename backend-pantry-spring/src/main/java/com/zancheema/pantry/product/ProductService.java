@@ -2,18 +2,19 @@ package com.zancheema.pantry.product;
 
 import com.zancheema.pantry.product.dto.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 public interface ProductService {
-    Products getProducts();
+    Products getProducts(Principal principal);
 
-    Optional<ProductInfo> getProduct(String barcode);
+    Optional<ProductInfo> getProduct(Principal principal, String barcode);
 
-    ExistsInfo productExists(String barcode);
+    ExistsInfo productExists(Principal principal, String barcode);
 
-    ProductInfo addProduct(AddProductPayload payload);
+    ProductInfo addProduct(Principal principal, AddProductPayload payload);
 
-    Optional<ProductInfo> useProduct(String barcode, UseProductPayload payload);
+    Optional<ProductInfo> useProduct(Principal principal, String barcode, UseProductPayload payload);
 
     void useProductCompletely(String barcode);
 }

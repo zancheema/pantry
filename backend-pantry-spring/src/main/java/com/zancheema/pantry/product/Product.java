@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -15,7 +14,4 @@ import javax.persistence.Id;
 public class Product {
     @Id
     private String barcode;
-
-    @Column(nullable = false)
-    private int quantity;
 }
