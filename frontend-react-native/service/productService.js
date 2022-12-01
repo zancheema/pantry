@@ -15,10 +15,14 @@ export async function productExists(barcode) {
     return await api({ method: 'get', url: `products/${barcode}/exists` });
 }
 
-export async function addProduct(product) {
+export async function createProduct(product) {
     // return await axios.post('/products/add', product);
     console.log('add product: ' + JSON.stringify(product));
     return await api({ method: 'post', url: 'products/add', data: product });
+}
+
+export async function addProduct(barcode, payload) {
+    return await api({ method: 'patch', url: `products/${barcode}/add`, data: payload });
 }
 
 export async function useProduct(barcode, { quantity }) {

@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import Dialog from 'react-native-dialog';
-import { addProduct } from '../../service/productService';
+import { createProduct } from '../../service/productService';
 
-export function AddProductDialog({ dialogVisible, hideDialog, barcode }) {
+export default function CreateProductDialog({ dialogVisible, hideDialog, barcode }) {
     const [quantity, setQuantity] = useState(1);
+    const [name, setName] = useState('');
 
     async function addCurrentProduct() {
+        if (quantity == 0 || quantity === '' || name === '') {
+            Alert.alert('No field should be empty');
+            return;
+        }
         try {
-            await addProduct(barcode, { quantity })
+            await createProduct({ barcode, name, quantity })
             hideDialog();
             Alert.alert('Product added successfully.');
         } catch (e) {
@@ -23,6 +28,11 @@ export function AddProductDialog({ dialogVisible, hideDialog, barcode }) {
             <Dialog.Description>
                 Set quantity for the product:
             </Dialog.Description>
+            <Dialog.Input
+                onChangeText={(text) => setName(text)}
+                placeholder='Name'
+                value={name}
+            />
             <Dialog.Input
                 onChangeText={(text) => setQuantity(text)}
                 keyboardType='numeric'

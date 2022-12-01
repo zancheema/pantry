@@ -17,6 +17,9 @@ public class ProductDetail {
     @GeneratedValue
     private long id;
 
+    @Column(nullable = false)
+    private String name;
+
     @ManyToOne(optional = false)
     private Product product;
 

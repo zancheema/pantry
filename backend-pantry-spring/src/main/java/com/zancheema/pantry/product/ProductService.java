@@ -12,7 +12,9 @@ public interface ProductService {
 
     ExistsInfo productExists(Principal principal, String barcode);
 
-    ProductInfo addProduct(Principal principal, AddProductPayload payload);
+    Optional<ProductInfo> createProduct(Principal principal, CreateProductPayload payload);
+
+    Optional<ProductInfo> addProduct(Principal principal, String barcode, AddProductPayload payload);
 
     Optional<ProductInfo> useProduct(Principal principal, String barcode, UseProductPayload payload);
 

@@ -15,5 +15,7 @@ public interface ProductDetailRepository extends CrudRepository<ProductDetail, L
 
     Optional<ProductDetail> findByProductBarcodeAndUserUsername(String barcode, String username);
 
+    boolean existsByProductBarcodeAndUserUsername(String barcode, String username);
+
     void deleteByProductBarcodeAndUserUsername(String barcode, String name);
 }

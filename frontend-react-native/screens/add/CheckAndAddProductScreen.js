@@ -2,15 +2,21 @@ import { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import styles from '../../common/styles';
-import AddProductDialog from './AddProductDialog';
+import CreateProductDialog from './CreateProductDialog';
 import { productExists } from '../../service/productService';
+import { AddProductDialog } from './AddProductDialog';
 
 export default function CheckAndAddProductScreen({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [barcode, setBarcode] = useState(null);
-    const [dialogVisible, setDialogVisible] = useState(false);
-    const showDialog = () => setDialogVisible(true);
-    const hideDialog = () => setDialogVisible(false);
+
+    const [createDialogVisible, setCreateDialogVisible] = useState(false);
+    const showCreateDialog = () => setCreateDialogVisible(true);
+    const hideCreateDialog = () => setCreateDialogVisible(false);
+
+    const [addDialogVisible, setAddDialogVisible] = useState(false);
+    const showAddDialog = () => setAddDialogVisible(true);
+    const hideAddDialog = () => setAddDialogVisible(false);
 
     const showProductAlreadyExists = (quantity) => Alert.alert(
         'Already Exists',
@@ -22,7 +28,7 @@ export default function CheckAndAddProductScreen({ navigation }) {
             },
             {
                 text: 'Yes',
-                onPress: showDialog
+                onPress: showAddDialog
             }
         ],
         {
@@ -49,7 +55,7 @@ export default function CheckAndAddProductScreen({ navigation }) {
         if (exists) {
             showProductAlreadyExists(quantity);
         } else {
-            showDialog();
+            showCreateDialog();
         }
     }
 
@@ -68,10 +74,16 @@ export default function CheckAndAddProductScreen({ navigation }) {
             />
             {barcode && <Button title={'Tap to Scan Again'} onPress={() => setBarcode(false)} />}
 
+            <CreateProductDialog
+                barcode={barcode}
+                dialogVisible={createDialogVisible}
+                hideDialog={hideCreateDialog}
+            />
+
             <AddProductDialog
                 barcode={barcode}
-                dialogVisible={dialogVisible}
-                hideDialog={hideDialog}
+                dialogVisible={addDialogVisible}
+                hideDialog={hideAddDialog}
             />
         </View>
     );

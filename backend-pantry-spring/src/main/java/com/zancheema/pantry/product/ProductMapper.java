@@ -11,6 +11,7 @@ public class ProductMapper {
     public ProductInfo toProductInfo(ProductDetail productDetail) {
         return new ProductInfo(
                 productDetail.getProduct().getBarcode(),
+                productDetail.getName(),
                 productDetail.getQuantity(),
                 new HashSet<>()
         );

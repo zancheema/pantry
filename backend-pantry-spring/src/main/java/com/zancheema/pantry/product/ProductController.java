@@ -36,14 +36,30 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ProductInfo> addProduct(
+    public ResponseEntity<ProductInfo> createProduct(
             Principal principal,
-            @RequestBody @Valid AddProductPayload payload
+            @RequestBody @Valid CreateProductPayload payload
     ) throws URISyntaxException {
-        ProductInfo product = productService.addProduct(principal, payload);
+        Optional<ProductInfo> optionalProductInfo = productService.createProduct(principal, payload);
+        if (optionalProductInfo.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        ProductInfo product = optionalProductInfo.get();
         URI location = new URI("/api/products/" + product.barcode());
         return ResponseEntity.created(location)
                 .body(product);
+    }
+
+    @PatchMapping("/{barcode}/add")
+    public ResponseEntity<ProductInfo> addProduct(
+            Principal principal,
+            @PathVariable("barcode") String barcode,
+            @RequestBody @Valid AddProductPayload payload
+    ) {
+        Optional<ProductInfo> optionalProduct = productService.addProduct(principal, barcode, payload);
+        if (optionalProduct.isEmpty()) return ResponseEntity.badRequest().build();
+
+        return ResponseEntity.ok(optionalProduct.get());
     }
 
     @PatchMapping("/{barcode}/use")

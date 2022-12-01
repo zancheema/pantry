@@ -3,16 +3,16 @@ import { Text, View, StyleSheet, Button, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import styles from '../../common/styles';
 import UseProductDialog from './UseProductDialog';
-import AddProductDialog from '../add/AddProductDialog';
+import CreateProductDialog from '../add/CreateProductDialog';
 import { productExists } from '../../service/productService';
 
 export default function UseProductScreen({ navigation, route }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [barcode, setBarcode] = useState(null);
 
-    const [addProductDialogVisible, setAddProductDialogVisible] = useState(false);
-    const showAddProductDialog = () => setAddProductDialogVisible(true);
-    const hideAddProductDialog = () => setAddProductDialogVisible(false);
+    const [createProductDialogVisible, setCreateProductDialogVisible] = useState(false);
+    const showCreateProductDialog = () => setCreateProductDialogVisible(true);
+    const hideCreateProductDialog = () => setCreateProductDialogVisible(false);
 
     const [useProductDialogVisible, setUseProductDialogVisible] = useState(false);
     const showUseProductDialog = () => setUseProductDialogVisible(true);
@@ -28,7 +28,7 @@ export default function UseProductScreen({ navigation, route }) {
             },
             {
                 text: 'Yes',
-                onPress: showAddProductDialog
+                onPress: showCreateProductDialog
             }
         ],
         {
@@ -74,10 +74,10 @@ export default function UseProductScreen({ navigation, route }) {
             />
             {barcode && <Button title={'Tap to Scan Again'} onPress={() => setBarcode(false)} />}
 
-            <AddProductDialog
+            <CreateProductDialog
                 barcode={barcode}
-                dialogVisible={addProductDialogVisible}
-                hideDialog={hideAddProductDialog}
+                dialogVisible={createProductDialogVisible}
+                hideDialog={hideCreateProductDialog}
             />
 
             <UseProductDialog

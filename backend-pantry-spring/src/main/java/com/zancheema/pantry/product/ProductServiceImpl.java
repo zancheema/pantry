@@ -4,14 +4,13 @@ import com.zancheema.pantry.common.StreamUtils;
 import com.zancheema.pantry.product.dto.*;
 import com.zancheema.pantry.productdetail.ProductDetail;
 import com.zancheema.pantry.productdetail.ProductDetailRepository;
-import com.zancheema.pantry.tag.Tag;
 import com.zancheema.pantry.tag.TagRepository;
-import com.zancheema.pantry.tagdetail.TagDetail;
 import com.zancheema.pantry.tagdetail.TagDetailRepository;
 import com.zancheema.pantry.user.User;
 import com.zancheema.pantry.user.UserRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.Optional;
 import java.util.Set;
@@ -58,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toSet());
         return new ProductInfo(
                 productDetail.getProduct().getBarcode(),
+                productDetail.getName(),
                 productDetail.getQuantity(),
                 tags
         );
@@ -72,44 +72,61 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductInfo addProduct(Principal principal, AddProductPayload payload) {
-        User user = getUser(principal);
-        // save product
-        Product product = productRepository.findById(payload.getBarcode())
-                .orElse(productRepository.save(new Product(payload.getBarcode())));
-
-        // save product detail
-        Optional<ProductDetail> optionalProductDetail = productDetailRepository
-                .findByProductAndUser(product, user);
-        ProductDetail productDetail;
-        if (optionalProductDetail.isPresent()) {
-            productDetail = optionalProductDetail.get();
-            productDetail.setQuantity(productDetail.getQuantity() + payload.getQuantity());
-        } else {
-            productDetail = new ProductDetail(0, product, user, payload.getQuantity());
+    public Optional<ProductInfo> createProduct(Principal principal, CreateProductPayload payload) {
+        if (productDetailRepository.existsByProductBarcodeAndUserUsername(
+                payload.getBarcode(), principal.getName()
+        )) {
+            return Optional.empty();
         }
-        ProductDetail savedProductDetail = productDetailRepository.save(productDetail);
 
-        // save tags
-        Set<String> productTags = payload.getTags()
+        User user = getUser(principal);
+        Product product = productRepository.findById(payload.getBarcode()).get();
+
+        ProductDetail productDetail = new ProductDetail(0, payload.getName(), product, user, payload.getQuantity());
+
+        ProductDetail savedProductDetail = productDetailRepository.save(productDetail);
+        Set<String> tags = tagDetailRepository.findAllByProductDetail(savedProductDetail)
                 .stream()
-                .map(tagName -> {
-                    String cleanTagName = tagName.toLowerCase().trim();
-                    // create tag if not already | with tag_name
-                    Tag tag = tagRepository.findById(cleanTagName)
-                            .orElse(tagRepository.save(new Tag(cleanTagName)));
-                    // create tag_detail if not already | with tag_detail_tag_name & tag_detail_product_detail_id
-                    if (!tagDetailRepository.existsByTagAndProductDetail(tag, productDetail)) {
-                        TagDetail tagDetail = new TagDetail(0, tag, savedProductDetail);
-                        tagDetailRepository.save(tagDetail);
-                    }
-                    return tag.getName();
-                })
+                .map(detail -> detail.getTag().getName())
                 .collect(Collectors.toSet());
 
-        return new ProductInfo(product.getBarcode(), savedProductDetail.getQuantity(), productTags);
+        return Optional.of(
+                new ProductInfo(
+                        product.getBarcode(),
+                        savedProductDetail.getName().trim(),
+                        savedProductDetail.getQuantity(),
+                        tags
+                )
+        );
     }
 
+    @Override
+    public Optional<ProductInfo> addProduct(Principal principal, String barcode, AddProductPayload payload) {
+        ProductDetail productDetail = productDetailRepository
+                .findByProductBarcodeAndUserUsername(barcode, principal.getName())
+                .orElse(null);
+        if (productDetail == null) {
+            return Optional.empty();
+        }
+        productDetail.setQuantity(productDetail.getQuantity() + payload.getQuantity());
+
+        ProductDetail savedProductDetail = productDetailRepository.save(productDetail);
+        Set<String> tags = tagDetailRepository.findAllByProductDetail(savedProductDetail)
+                .stream()
+                .map(detail -> detail.getTag().getName())
+                .collect(Collectors.toSet());
+
+        return Optional.of(
+                new ProductInfo(
+                        barcode,
+                        savedProductDetail.getName(),
+                        savedProductDetail.getQuantity(),
+                        tags
+                )
+        );
+    }
+
+    @Transactional
     @Override
     public Optional<ProductInfo> useProduct(Principal principal, String barcode, UseProductPayload payload) {
         Optional<ProductDetail> optionalProductDetail = productDetailRepository

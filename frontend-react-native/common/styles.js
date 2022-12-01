@@ -50,5 +50,10 @@ export default StyleSheet.create({
         backgroundColor: colors.secondary,
         borderRadius: 10,
         width: '90%',
+    },
+    row: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 });
