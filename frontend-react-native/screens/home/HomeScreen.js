@@ -13,6 +13,10 @@ export default function HomeScreen({ route, navigation }) {
         navigation.navigate('Use Product', { name: 'Zain' });
     }
 
+    function viewProducts() {
+        navigation.navigate('Products');
+    }
+
     return (
         <View style={{ flex: 1, backgroundColor: colors.bgColor }}>
             <View style={styles.container}>
@@ -24,7 +28,9 @@ export default function HomeScreen({ route, navigation }) {
                     <Button title='Use' onPress={use} />
                 </View>
 
-
+                <View style={{ marginBottom: 10 }}>
+                    <Button title='Products' onPress={viewProducts} />
+                </View>
             </View>
 
             <Pressable style={{

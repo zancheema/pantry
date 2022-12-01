@@ -80,7 +80,8 @@ public class ProductServiceImpl implements ProductService {
         }
 
         User user = getUser(principal);
-        Product product = productRepository.findById(payload.getBarcode()).get();
+        Product product = productRepository.findById(payload.getBarcode())
+                .orElse(productRepository.save(new Product(payload.getBarcode())));
 
         ProductDetail productDetail = new ProductDetail(0, payload.getName(), product, user, payload.getQuantity());
 

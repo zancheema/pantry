@@ -8,8 +8,9 @@ export const colors = {
 
 export default StyleSheet.create({
     container: {
+        width: '100%',
         flex: 1,
-        backgroundColor: colors.bgColor,
+        // backgroundColor: colors.bgColor,
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 95
@@ -52,8 +53,13 @@ export default StyleSheet.create({
         width: '90%',
     },
     row: {
-        flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+    },
+    divider: {
+        height: 1,
+        backgroundColor: 'grey'
     }
 });

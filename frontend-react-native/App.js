@@ -8,6 +8,7 @@ import * as SecureStore from 'expo-secure-store';
 import SignInScreen from './screens/signin/SignInScreen';
 import SignUpScreen from './screens/signup/SignUpScreen';
 import { getUserProfile } from './service/userService';
+import ProductsScreen from './screens/products/ProductsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +57,7 @@ export default function App() {
               <Stack.Screen name='Home' component={HomeScreen} initialParams={{ onLogout }} />
               <Stack.Screen name='Add Product' component={AddProductScreen} />
               <Stack.Screen name='Use Product' component={UseProductScreen} />
+              <Stack.Screen name='Products' component={ProductsScreen} />
             </>
           )
         }
