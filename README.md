@@ -1,16 +1,18 @@
 # Pantry Management Application
 ## Overview
 - [Problem Statement](#problem-statement)
-- [Solution Architecture](#solution-architecture)
-- [Technologies Stack](#technologies-tack)
-- [Implementation Modules](#implementation-modules)
-  - [User](#user)
-    - [Sign Up](#sign-up)
-    - [Login](#login)
-  - [Product](#product)
-    - [Add Product](#add-product)
-    - [Use Product](#use-product)
-    - [View Products in Pantry](#view-products-in-pantry)
+- [Proposed Solution](#proposed-solution)
+- [Technologies Stack](#technologies-stack)
+- [Architecture](#architecture)
+  - [Entity Relationship Diagram](#entity-relationship-diagram)
+  - Use Cases
+    - [User](#user)
+      - [Sign Up](#sign-up)
+      - [Login](#login)
+    - [Product](#product)
+      - [Add Product](#add-product)
+      - [Use Product](#use-product)
+      - [View Products in Pantry](#view-products-in-pantry)
     
 ## Problem Statement
 <p>
@@ -29,7 +31,7 @@ Moreover, how can he do it in a more convenient way? There are inventory managem
 applications where you can manage the product manually. But, are they really convenient?
 </p>
 
-## Solution Architecture
+## Proposed Solution
 - A mobile application that saves products just by scanning their barcode.
 - No need to search the products manually to know if you need more.
 - The app is very interactive. After scanning the product the app automatically searches 
