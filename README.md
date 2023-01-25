@@ -17,7 +17,7 @@
 ## Problem Statement
 <p>
 John Doe is a regular guy who lives in his apartment and works a 9-5 day job. 
-Every week he goes to Costco to buy his groceries. The items are at wholesale
+Every week he goes to Tesco to buy his groceries. The items are at wholesale
 but unfortunately, they are sold in packs.
 </p>
 <p>
