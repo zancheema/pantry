@@ -1,5 +1,6 @@
 # Pantry Management Application
 ## Overview
+- [Live Demo](#watch-live-demo)
 - [Problem Statement](#problem-statement)
 - [Proposed Solution](#proposed-solution)
 - [Technologies Stack](#technologies-stack)
@@ -13,6 +14,11 @@
       - [Add Product](#add-product)
       - [Use Product](#use-product)
       - [View Products in Pantry](#view-products-in-pantry)
+      
+## Watch Live Demo
+<a href="https://www.youtube.com/watch?v=DS_2D67wY5g" target="_blank"><img src="https://d1axv6bfszrjec.cloudfront.net/wp-content/uploads/2021/09/Inventory-Management-Infographic.jpg" 
+alt="Spring Booot React Native Inventory Management | Live Demo" border="10" /></a>
+<p>Click to watch youtube video 👆</p>
     
 ## Problem Statement
 <p>
